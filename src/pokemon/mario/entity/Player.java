@@ -33,6 +33,19 @@ public class Player extends Entity {
 			graph.drawImage(Main.player[frame % 5 + 5].getBufferedImage(), x, y, width, height, null);
 		} // graph.drawImage(Main.player.getBufferedImage(),x,y,width,height,null);
 	}
+	
+	@Override
+	public void die() {
+		
+		super.die();
+		Main.setLives(Main.getLives()-1);
+		Main.setDeathScreen(true); 
+		
+		if(Main.getLives()==0) {
+			Main.setGameover(true);
+		}
+			
+	}
 
 	@Override
 	public void update() {
@@ -119,16 +132,16 @@ public class Player extends Entity {
 
 		}
 		if (jumping && !goingDownPipe) {
-			gravity -= 0.1;
+			gravity -= 0.17;
 			setSpeedY(-gravity);
-			if (gravity <= 0.0) {
+			if (gravity <= 0.5) {
 				jumping = false;
 				falling = true;
 
 			}
 		}
 		if (falling && !goingDownPipe) {
-			gravity += 0.1;
+			gravity += 0.17;
 			setSpeedY(gravity);
 		}
 

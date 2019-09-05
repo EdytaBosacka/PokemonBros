@@ -17,6 +17,7 @@ public abstract class Entity {
 	
 	public int facing=0; //0-right, 1-left
 	
+	
 	public double gravity=0.0;
 	
 	public double speedX, speedY;

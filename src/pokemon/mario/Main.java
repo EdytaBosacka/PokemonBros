@@ -24,17 +24,23 @@ public class Main extends Canvas implements Runnable {
 	public static final int WIDTH = 400;
 	public static final int HEIGHT = WIDTH * 2 / 4;
 	public static final int SCALE = 3;
+	public static final int DEATHTIME = 180;
 	public static final String TITLE = "Pokemon bros";
 	private BufferedImage image;
 
 	private Thread thread;
 	private static Handler handler;
 	private static Camera camera;
-	
+
 	private static int coins = 0;
-	
+	private static int lives = 2;
+	private static int deathScreenTimer = 0;
+
+	private static boolean deathScreen = true;
+	private static boolean gameover = false;
+
 	private static SpriteSheet sheet;
-	private static SpriteSheet groundsheet; 
+	private static SpriteSheet groundsheet;
 	private static SpriteSheet playersheet;
 	private static SpriteSheet mushroomsheet;
 	private static SpriteSheet charmandersheet;
@@ -42,6 +48,7 @@ public class Main extends Canvas implements Runnable {
 	private static SpriteSheet usedpowerupsheet;
 	private static SpriteSheet pipesheet;
 	private static SpriteSheet coinsheet;
+	private static SpriteSheet bosssheet;
 
 	public static Sprite grass;
 	public static Sprite ground;
@@ -54,6 +61,7 @@ public class Main extends Canvas implements Runnable {
 	public static Sprite[] charmander = new Sprite[54];
 	public static Sprite pipe;
 	public static Sprite coin;
+	public static Sprite[] boss = new Sprite[4];
 
 	private boolean running = false;
 
@@ -65,6 +73,7 @@ public class Main extends Canvas implements Runnable {
 		thread.start();
 
 	}
+
 	public static Handler getHandler() {
 		return handler;
 	}
@@ -76,21 +85,21 @@ public class Main extends Canvas implements Runnable {
 		playersheet = new SpriteSheet("/ash.png");
 		camera = new Camera();
 		mushroomsheet = new SpriteSheet("/kanto.png");
-		charmandersheet=new SpriteSheet("/charmander.png");
+		charmandersheet = new SpriteSheet("/charmander.png");
 		powerupsheet = new SpriteSheet("/powerUp.jpg");
 		usedpowerupsheet = new SpriteSheet("/usedPowerUp.jpg");
 		pipesheet = new SpriteSheet("/pipe.png");
 		coinsheet = new SpriteSheet("/pokeball.png");
-		
+		bosssheet = new SpriteSheet("/charizard.png");
 
 		addKeyListener(new KeyInput());
 		grass = new Sprite(sheet, 2, 1);
-		ground = new Sprite(groundsheet,1,1);
+		ground = new Sprite(groundsheet, 1, 1);
 		mushroom = new Sprite(mushroomsheet, 1, 1);
 		powerUp = new Sprite(powerupsheet, 1, 1);
 		usedPowerUp = new Sprite(usedpowerupsheet, 1, 1);
 		pipe = new Sprite(pipesheet, 1, 1);
-		coin = new Sprite(coinsheet,1,1);
+		coin = new Sprite(coinsheet, 1, 1);
 
 		int picture_counter = 0;
 		for (int i = 1; i <= 4; i++) {
@@ -108,6 +117,14 @@ public class Main extends Canvas implements Runnable {
 			}
 
 		}
+		picture_counter = 0;
+		for (int i = 1; i <= 2; i++) {
+			for (int j = 1; j <= 2; j++) {
+				boss[picture_counter] = new Sprite(bosssheet, j, i);
+				picture_counter++;
+			}
+
+		}
 
 		try {
 			image = ImageIO.read(getClass().getResource("/level.png"));
@@ -115,7 +132,6 @@ public class Main extends Canvas implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		handler.createLevel(image);
 
 	}
 
@@ -160,12 +176,30 @@ public class Main extends Canvas implements Runnable {
 		Graphics graph = buf.getDrawGraphics();
 		graph.setColor(new Color(135, 206, 235));
 		graph.fillRect(0, 0, getWidth(), getHeight());
-		graph.drawImage(coin.getBufferedImage(), 20, 20,64,64,null);
-		graph.setColor(Color.WHITE);
-		graph.setFont(new Font("Courier",Font.BOLD,20));
-		graph.drawString("x"+coins, 90, 80);
+		if (!deathScreen) {
+			graph.drawImage(coin.getBufferedImage(), 20, 20, 64, 64, null);
+			graph.setColor(Color.WHITE);
+			graph.setFont(new Font("Courier", Font.BOLD, 20));
+			graph.drawString("x" + coins, 90, 80);
+		} else {
+			
+			if(!gameover) {
+				graph.drawImage(player[3].getBufferedImage(), 500, 250, 70, 70, null);
+				graph.setColor(Color.WHITE);
+				graph.setFont(new Font("Courier", Font.BOLD, 20));
+				graph.drawString("x" + lives, 570, 290);
+			}
+			else {
+				graph.setColor(Color.WHITE);
+				graph.setFont(new Font("Courier", Font.BOLD, 50));
+				graph.drawString("Game over", 450, 290);
+			}
+		}
+
 		graph.translate(camera.getX(), camera.getY());
-		handler.draw(graph);
+		if(!deathScreen) {
+			handler.draw(graph);
+		}
 		graph.dispose();
 		buf.show();
 
@@ -173,10 +207,21 @@ public class Main extends Canvas implements Runnable {
 
 	public void update() {
 		handler.update();
-		for (int i=0;i<handler.entity.size();i++) {
+		for (int i = 0; i < handler.entity.size(); i++) {
 			Entity e = handler.entity.get(i);
 			if (e.getId() == ID.player) {
-				if(!e.goingDownPipe)camera.update(e);
+				if (!e.goingDownPipe)
+					camera.update(e);
+			}
+		}
+		if (deathScreen && !gameover) {
+			deathScreenTimer++;
+			if (deathScreenTimer >= DEATHTIME) {
+				deathScreen = false;
+				deathScreenTimer = 0;
+				handler.clearLevel();
+				handler.createLevel(image);
+
 			}
 		}
 
@@ -191,7 +236,8 @@ public class Main extends Canvas implements Runnable {
 	}
 
 	private synchronized void stop() {
-		if (!running) return;
+		if (!running)
+			return;
 		running = false;
 		try {
 			thread.join();
@@ -220,11 +266,37 @@ public class Main extends Canvas implements Runnable {
 		frame.setVisible(true);
 		object.start();
 	}
+
 	public static int getCoins() {
 		return coins;
 	}
+
 	public static void setCoins(int coins) {
 		Main.coins = coins;
+	}
+
+	public static int getLives() {
+		return lives;
+	}
+
+	public static void setLives(int lives) {
+		Main.lives = lives;
+	}
+
+	public static boolean isDeathScreen() {
+		return deathScreen;
+	}
+
+	public static void setDeathScreen(boolean deathScreen) {
+		Main.deathScreen = deathScreen;
+	}
+
+	public static boolean isGameover() {
+		return gameover;
+	}
+
+	public static void setGameover(boolean gameover) {
+		Main.gameover = gameover;
 	}
 
 }
