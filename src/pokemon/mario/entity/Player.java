@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import pokemon.mario.Handler;
 import pokemon.mario.ID;
 import pokemon.mario.Main;
+import pokemon.mario.entity.pokemon.Boss;
+import pokemon.mario.states.BossState;
 import pokemon.mario.states.PlayerState;
 import pokemon.mario.tile.Tile;
 
@@ -116,9 +118,22 @@ public class Player extends Entity {
 						state = PlayerState.BIG;
 					e.die();
 				}
-			} else if (e.getId() == ID.charmander) {
+			} else if (e.getId() == ID.charmander||e.getId() == ID.boss) {
 				if (getBoundsBottom().intersects(e.getBoundsTop())) {
-					e.die();
+					if(e.getId()!=ID.boss)e.die();
+					else if (((Boss) e).isAttackable()) {
+						((Boss) e).setHealth(((Boss) e).getHealth()-1);
+						e.falling = true;
+						e.gravity = 3.0;
+						((Boss) e).setBossState(BossState.RECOVERING);
+						((Boss) e).setAttackable(false);
+						((Boss) e).setPhaseTime(0);
+						
+						jumping = true;
+						falling = false;
+						gravity =3.5;
+						
+					}
 				} else if (getBounds().intersects(e.getBounds())) {
 					if (state == PlayerState.BIG) {
 						state = PlayerState.SMALL;

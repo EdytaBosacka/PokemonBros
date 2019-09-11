@@ -16,7 +16,9 @@ import pokemon.mario.entity.Entity;
 import pokemon.mario.entity.Player;
 import pokemon.mario.graphics.Sprite;
 import pokemon.mario.graphics.SpriteSheet;
+import pokemon.mario.graphics.gui.Launcher;
 import pokemon.mario.input.KeyInput;
+import pokemon.mario.input.MouseInput;
 import pokemon.mario.tile.Wall;
 
 public class Main extends Canvas implements Runnable {
@@ -31,13 +33,15 @@ public class Main extends Canvas implements Runnable {
 	private Thread thread;
 	private static Handler handler;
 	private static Camera camera;
+	private static Launcher launcher;
 
 	private static int coins = 0;
-	private static int lives = 2;
+	private static int lives = 5;
 	private static int deathScreenTimer = 0;
 
 	private static boolean deathScreen = true;
 	private static boolean gameover = false;
+	private static boolean playing = false;
 
 	private static SpriteSheet sheet;
 	private static SpriteSheet groundsheet;
@@ -64,6 +68,7 @@ public class Main extends Canvas implements Runnable {
 	public static Sprite[] boss = new Sprite[4];
 
 	private boolean running = false;
+	public static BufferedImage backgroundmenu;
 
 	private synchronized void start() {
 		if (running)
@@ -79,11 +84,17 @@ public class Main extends Canvas implements Runnable {
 	}
 
 	public void initialize() {
+		
+		addKeyListener(new KeyInput());
+		addMouseListener(new MouseInput());
+		
 		handler = new Handler();
+		camera = new Camera();
+		launcher = new Launcher();
+		
 		sheet = new SpriteSheet("/wall.png");
 		groundsheet = new SpriteSheet("/ground.png");
 		playersheet = new SpriteSheet("/ash.png");
-		camera = new Camera();
 		mushroomsheet = new SpriteSheet("/kanto.png");
 		charmandersheet = new SpriteSheet("/charmander.png");
 		powerupsheet = new SpriteSheet("/powerUp.jpg");
@@ -91,8 +102,15 @@ public class Main extends Canvas implements Runnable {
 		pipesheet = new SpriteSheet("/pipe.png");
 		coinsheet = new SpriteSheet("/pokeball.png");
 		bosssheet = new SpriteSheet("/charizard.png");
+		
+		try {
+			backgroundmenu = ImageIO.read(getClass().getResource("/menu.png"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
-		addKeyListener(new KeyInput());
+		
 		grass = new Sprite(sheet, 2, 1);
 		ground = new Sprite(groundsheet, 1, 1);
 		mushroom = new Sprite(mushroomsheet, 1, 1);
@@ -182,23 +200,26 @@ public class Main extends Canvas implements Runnable {
 			graph.setFont(new Font("Courier", Font.BOLD, 20));
 			graph.drawString("x" + coins, 90, 80);
 		} else {
-			
-			if(!gameover) {
+
+			if (!gameover) {
 				graph.drawImage(player[3].getBufferedImage(), 500, 250, 70, 70, null);
 				graph.setColor(Color.WHITE);
 				graph.setFont(new Font("Courier", Font.BOLD, 20));
 				graph.drawString("x" + lives, 570, 290);
-			}
-			else {
+			} else {
 				graph.setColor(Color.WHITE);
 				graph.setFont(new Font("Courier", Font.BOLD, 50));
 				graph.drawString("Game over", 450, 290);
 			}
 		}
 
-		graph.translate(camera.getX(), camera.getY());
-		if(!deathScreen) {
+		if (playing) {
+			graph.translate(camera.getX(), camera.getY());
+		}
+		if (!deathScreen && playing) {
 			handler.draw(graph);
+		}else if(!playing) {
+			launcher.draw(graph);
 		}
 		graph.dispose();
 		buf.show();
@@ -206,7 +227,9 @@ public class Main extends Canvas implements Runnable {
 	}
 
 	public void update() {
-		handler.update();
+		if (playing) {
+			handler.update();
+		}
 		for (int i = 0; i < handler.entity.size(); i++) {
 			Entity e = handler.entity.get(i);
 			if (e.getId() == ID.player) {
@@ -297,6 +320,18 @@ public class Main extends Canvas implements Runnable {
 
 	public static void setGameover(boolean gameover) {
 		Main.gameover = gameover;
+	}
+
+	public static Launcher getLauncher() {
+		return launcher;
+	}
+
+	public static boolean isPlaying() {
+		return playing;
+	}
+
+	public static void setPlaying(boolean playing) {
+		Main.playing = playing;
 	}
 
 }
