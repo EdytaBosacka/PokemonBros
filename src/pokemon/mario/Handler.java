@@ -28,10 +28,15 @@ public class Handler {
 	public void draw(Graphics g) {
 		for (int i = 0;i<entity.size();i++) {
 			Entity en = entity.get(i);
-			en.draw(g);
+			if(Main.getVisibleArea()!=null&&en.getBounds().intersects(Main.getVisibleArea())) {
+				en.draw(g);
+				
+			}
 		}
 		for(Tile ti: tile) {
-			ti.draw(g);
+			if(Main.getVisibleArea()!=null&&ti.getBounds().intersects(Main.getVisibleArea())) {
+				ti.draw(g);
+			}
 		}
 	}
 	
@@ -41,7 +46,9 @@ public class Handler {
 			en.update();
 		}
 		for(Tile ti: tile) {
+			if(Main.getVisibleArea()!=null&&ti.getBounds().intersects(Main.getVisibleArea())) {
 			ti.update();
+			}
 		}
 		
 	}
@@ -77,7 +84,8 @@ public class Handler {
 				
 				if(red==0&&green==0&&blue==0) addTile(new Wall(x*64,y*64,64,64,true,ID.wall,this));
 				else if(red==128&&green==64&&blue==0) addTile(new Ground(x*64,y*64,64,64,true,ID.wall,this));
-				else if(red==255&&green==255&&blue==0) addTile(new PowerUpBlock(x*64,y*64,64,64,true, ID.powerUp,this, Main.mushroom));
+				else if(red==255&&green==255&&blue==0) addTile(new PowerUpBlock(x*64,y*64,64,64,true, ID.powerUp,this, Main.mushroom,PowerUpBlock.POWERUP));
+				else if(red==0&&green==162&&blue==232) addTile(new PowerUpBlock(x*64,y*64,64,64,true, ID.powerUp,this, Main.upstar,PowerUpBlock.STAR));
 				else if(red==0&&green==0&&blue==255) addEntity(new Player(x*64,y*64,64,64, ID.player,this));
 				else if(red==181&&green==230&&blue==29) addEntity(new Boss(x*64,y*64,128,128, ID.boss,this,3));
 //				if(red==255&&green==0&&blue==0) addEntity(new Mushroom(x*64,y*64,64,64, ID.mushroom,this));

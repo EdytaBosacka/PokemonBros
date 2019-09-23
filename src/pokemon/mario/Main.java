@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -53,6 +54,7 @@ public class Main extends Canvas implements Runnable {
 	private static SpriteSheet pipesheet;
 	private static SpriteSheet coinsheet;
 	private static SpriteSheet bosssheet;
+	private static SpriteSheet upstarsheet;
 
 	public static Sprite grass;
 	public static Sprite ground;
@@ -66,6 +68,7 @@ public class Main extends Canvas implements Runnable {
 	public static Sprite pipe;
 	public static Sprite coin;
 	public static Sprite[] boss = new Sprite[4];
+	public static Sprite upstar;
 
 	private boolean running = false;
 	public static BufferedImage backgroundmenu;
@@ -102,6 +105,7 @@ public class Main extends Canvas implements Runnable {
 		pipesheet = new SpriteSheet("/pipe.png");
 		coinsheet = new SpriteSheet("/pokeball.png");
 		bosssheet = new SpriteSheet("/charizard.png");
+		upstarsheet = new SpriteSheet("/1upstar.png");
 		
 		try {
 			backgroundmenu = ImageIO.read(getClass().getResource("/menu.png"));
@@ -118,6 +122,7 @@ public class Main extends Canvas implements Runnable {
 		usedPowerUp = new Sprite(usedpowerupsheet, 1, 1);
 		pipe = new Sprite(pipesheet, 1, 1);
 		coin = new Sprite(coinsheet, 1, 1);
+		upstar = new Sprite(upstarsheet,1,1);
 
 		int picture_counter = 0;
 		for (int i = 1; i <= 4; i++) {
@@ -237,7 +242,7 @@ public class Main extends Canvas implements Runnable {
 					camera.update(e);
 			}
 		}
-		if (deathScreen && !gameover) {
+		if (deathScreen && !gameover&& playing) {
 			deathScreenTimer++;
 			if (deathScreenTimer >= DEATHTIME) {
 				deathScreen = false;
@@ -256,6 +261,16 @@ public class Main extends Canvas implements Runnable {
 
 	public static int getFrameHeight() {
 		return HEIGHT * SCALE;
+	}
+	
+	public static Rectangle getVisibleArea() {
+		for(int i=0; i < handler.entity.size(); i++) {
+			Entity e = handler.entity.get(i);
+			if(e.getId() == ID.player) {
+				return new Rectangle(e.getX()-getFrameWidth()/2-5,e.getY()-getFrameHeight()/2-5, getFrameWidth()+10, getFrameHeight()+10);
+			}
+		}
+		return null;
 	}
 
 	private synchronized void stop() {

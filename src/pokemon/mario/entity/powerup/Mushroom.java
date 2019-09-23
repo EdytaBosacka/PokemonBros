@@ -9,7 +9,7 @@ import pokemon.mario.Main;
 import pokemon.mario.entity.Entity;
 import pokemon.mario.tile.Tile;
 
-public class Mushroom extends Entity {
+public abstract class Mushroom extends Entity {
 
 	private Random random = new Random();
 	public Mushroom(int x, int y, int width, int height,  ID id, Handler handler) {
@@ -29,11 +29,7 @@ public class Mushroom extends Entity {
 		
 	}
 
-	@Override
-	public void draw(Graphics graph) {
-		graph.drawImage(Main.mushroom.getBufferedImage(), x, y, width, height, null);
-
-	}
+	
 
 	@Override
 	public void update() {

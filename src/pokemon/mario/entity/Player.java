@@ -6,6 +6,8 @@ import pokemon.mario.Handler;
 import pokemon.mario.ID;
 import pokemon.mario.Main;
 import pokemon.mario.entity.pokemon.Boss;
+import pokemon.mario.entity.powerup.PowerUp;
+import pokemon.mario.entity.powerup.Star;
 import pokemon.mario.states.BossState;
 import pokemon.mario.states.PlayerState;
 import pokemon.mario.tile.Tile;
@@ -112,11 +114,16 @@ public class Player extends Entity {
 			Entity e = handler.entity.get(i);
 			if (e.getId() == ID.mushroom) {
 				if (getBounds().intersects(e.getBounds())) {
+					if(e instanceof PowerUp) {
 					y -= 0.3 * height;
 					height *= 1.3;
 					if (state == PlayerState.SMALL)
 						state = PlayerState.BIG;
+					}else if( e instanceof Star) {
+						Main.setLives(Main.getLives()+1);
+					}
 					e.die();
+					
 				}
 			} else if (e.getId() == ID.charmander||e.getId() == ID.boss) {
 				if (getBoundsBottom().intersects(e.getBoundsTop())) {
