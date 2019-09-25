@@ -8,6 +8,7 @@ import pokemon.mario.entity.Entity;
 import pokemon.mario.entity.Player;
 import pokemon.mario.entity.pokemon.Boss;
 import pokemon.mario.entity.pokemon.Charmander;
+import pokemon.mario.entity.pokemon.Squirtle;
 import pokemon.mario.entity.powerup.Mushroom;
 import pokemon.mario.tile.Coin;
 import pokemon.mario.tile.Ground;
@@ -90,6 +91,7 @@ public class Handler {
 				else if(red==181&&green==230&&blue==29) addEntity(new Boss(x*64,y*64,128,128, ID.boss,this,3));
 //				if(red==255&&green==0&&blue==0) addEntity(new Mushroom(x*64,y*64,64,64, ID.mushroom,this));
 				else if(red==0&&green==128&&blue==0) addEntity(new Charmander(x*64,y*64,64,64, ID.charmander,this));
+				else if(red==0&&green==255&&blue==0) addEntity(new Squirtle(x*64,y*64,64,64, ID.squirtle,this));
 				else if((red>251 && red<256)&& green==0&&blue==0) addTile(new Pipe(x*64,y*64,64,64,true,ID.pipe,this,255-red));
 				else if(red==247&&green==53&&blue==199) addTile(new Coin(x*64+12,y*64+12,40,40,true, ID.coin,this));
 			}

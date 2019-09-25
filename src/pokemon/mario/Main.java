@@ -35,6 +35,8 @@ public class Main extends Canvas implements Runnable {
 	private static Handler handler;
 	private static Camera camera;
 	private static Launcher launcher;
+	
+	private static int playerX, playerY;
 
 	private static int coins = 0;
 	private static int lives = 5;
@@ -49,6 +51,7 @@ public class Main extends Canvas implements Runnable {
 	private static SpriteSheet playersheet;
 	private static SpriteSheet mushroomsheet;
 	private static SpriteSheet charmandersheet;
+	private static SpriteSheet squirtlesheet;
 	private static SpriteSheet powerupsheet;
 	private static SpriteSheet usedpowerupsheet;
 	private static SpriteSheet pipesheet;
@@ -65,6 +68,7 @@ public class Main extends Canvas implements Runnable {
 	public static Sprite player[] = new Sprite[20];
 	public static Sprite mushroom;
 	public static Sprite[] charmander = new Sprite[54];
+	public static Sprite[] squirtle = new Sprite[10];
 	public static Sprite pipe;
 	public static Sprite coin;
 	public static Sprite[] boss = new Sprite[4];
@@ -100,6 +104,7 @@ public class Main extends Canvas implements Runnable {
 		playersheet = new SpriteSheet("/ash.png");
 		mushroomsheet = new SpriteSheet("/kanto.png");
 		charmandersheet = new SpriteSheet("/charmander.png");
+		squirtlesheet = new SpriteSheet("/squirtle.png");
 		powerupsheet = new SpriteSheet("/powerUp.jpg");
 		usedpowerupsheet = new SpriteSheet("/usedPowerUp.jpg");
 		pipesheet = new SpriteSheet("/pipe.png");
@@ -140,6 +145,13 @@ public class Main extends Canvas implements Runnable {
 			}
 
 		}
+		picture_counter = 0;
+			for (int j = 1; j <= 10; j++) {
+				squirtle[picture_counter] = new Sprite(squirtlesheet, j, 1);
+				picture_counter++;
+			}
+
+		
 		picture_counter = 0;
 		for (int i = 1; i <= 2; i++) {
 			for (int j = 1; j <= 2; j++) {
@@ -267,10 +279,15 @@ public class Main extends Canvas implements Runnable {
 		for(int i=0; i < handler.entity.size(); i++) {
 			Entity e = handler.entity.get(i);
 			if(e.getId() == ID.player) {
-				return new Rectangle(e.getX()-getFrameWidth()/2-5,e.getY()-getFrameHeight()/2-5, getFrameWidth()+10, getFrameHeight()+10);
+				if(!e.goingDownPipe) {
+				playerX = e.getX();
+				playerY = e.getY();
+				
+				return new Rectangle(playerX-getFrameWidth()/2-5,playerY-getFrameHeight()/2-5, getFrameWidth()+10, getFrameHeight()+10);
+				}
 			}
 		}
-		return null;
+		return new Rectangle(playerX-getFrameWidth()/2-5,playerY-getFrameHeight()/2-5, getFrameWidth()+10, getFrameHeight()+10);
 	}
 
 	private synchronized void stop() {
