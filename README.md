@@ -1,2 +1,2 @@
 # PokemonBros
-Gra PokemBros w której pokemony znalazły się w świecie Super Mario. 
+Gra PokemonBros w której pokemony znalazły się w świecie Super Mario. 
