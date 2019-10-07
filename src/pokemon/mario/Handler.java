@@ -11,6 +11,7 @@ import pokemon.mario.entity.pokemon.Charmander;
 import pokemon.mario.entity.pokemon.Squirtle;
 import pokemon.mario.entity.powerup.Mushroom;
 import pokemon.mario.tile.Coin;
+import pokemon.mario.tile.Flag;
 import pokemon.mario.tile.Ground;
 import pokemon.mario.tile.Pipe;
 import pokemon.mario.tile.PowerUpBlock;
@@ -94,6 +95,7 @@ public class Handler {
 				else if(red==0&&green==255&&blue==0) addEntity(new Squirtle(x*64,y*64,64,64, ID.squirtle,this));
 				else if((red>251 && red<256)&& green==0&&blue==0) addTile(new Pipe(x*64,y*64,64,64,true,ID.pipe,this,255-red));
 				else if(red==247&&green==53&&blue==199) addTile(new Coin(x*64+12,y*64+12,40,40,true, ID.coin,this));
+				else if(red==128&&green==0&&blue==64) addTile(new Flag(x*64,y*64,64,320,true,ID.flag,this));
 			}
 	}
 	public void clearLevel() {

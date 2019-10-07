@@ -7,17 +7,21 @@ import pokemon.mario.Handler;
 import pokemon.mario.ID;
 import pokemon.mario.Main;
 import pokemon.mario.entity.Entity;
+import pokemon.mario.states.SquirtleState;
 import pokemon.mario.tile.Tile;
 
 public class Squirtle extends Entity {
-	
+
 	private int frame = 0;
 	private int frameDelay = 0;
 	private Random random = new Random();
+	private int shellCount;
+
+	private SquirtleState squirtleState;
 
 	public Squirtle(int x, int y, int width, int height, ID id, Handler handler) {
 		super(x, y, width, height, id, handler);
-		
+
 		int direction = random.nextInt(2);
 
 		switch (direction) {
@@ -29,25 +33,31 @@ public class Squirtle extends Entity {
 			break;
 
 		}
+		squirtleState = SquirtleState.WALKING;
 	}
 
 	@Override
 	public void draw(Graphics graph) {
-		switch (frame) {
-		case 0:
-			graph.drawImage(Main.squirtle[0].getBufferedImage(), x, y, width, height, null);
-			break;
-		case 1:
-			graph.drawImage(Main.squirtle[4].getBufferedImage(), x, y, width, height, null);
-			break;
-		case 2:
-			graph.drawImage(Main.squirtle[6].getBufferedImage(), x, y, width, height, null);
-			break;
-		case 3:
-			graph.drawImage(Main.squirtle[7].getBufferedImage(), x, y, width, height, null);
-			break;
+		if (squirtleState == SquirtleState.WALKING) {
+
+			switch (frame) {
+			case 0:
+				graph.drawImage(Main.squirtle[0].getBufferedImage(), x, y, width, height, null);
+				break;
+			case 1:
+				graph.drawImage(Main.squirtle[4].getBufferedImage(), x, y, width, height, null);
+				break;
+			case 2:
+				graph.drawImage(Main.squirtle[6].getBufferedImage(), x, y, width, height, null);
+				break;
+			case 3:
+				graph.drawImage(Main.squirtle[7].getBufferedImage(), x, y, width, height, null);
+				break;
+			}
+		} else {
+			graph.drawImage(Main.squirtleshell.getBufferedImage(), x, y, width, height, null);
 		}
-		
+
 	}
 
 	@Override
@@ -55,10 +65,36 @@ public class Squirtle extends Entity {
 		x += speedX;
 		y += speedY;
 
+		if (squirtleState == SquirtleState.SHELL) {
+			shellCount++;
+			if (shellCount >= 300) {
+
+				shellCount = 0;
+				squirtleState = SquirtleState.WALKING;
+			}
+			if (squirtleState == SquirtleState.WALKING || squirtleState == SquirtleState.SPINNING) {
+				shellCount = 0;
+
+				if (speedX == 0) {
+					int direction = random.nextInt(2);
+
+					switch (direction) {
+					case 0:
+						setSpeedX(-2);
+						break;
+					case 1:
+						setSpeedX(2);
+						break;
+					}
+				}
+			}
+
+		}
+
 		for (Tile t : handler.tile) {
 			if (!t.solid)
 				continue;
-			if (t.getID() == ID.wall||t.getID() == ID.powerUp) {
+			if (t.getID() == ID.wall || t.getID() == ID.powerUp) {
 
 				if (getBoundsBottom().intersects(t.getBounds())) {
 					setSpeedY(0);
@@ -72,12 +108,21 @@ public class Squirtle extends Entity {
 				}
 
 				if (getBoundsLeft().intersects(t.getBounds())) {
-					setSpeedX(2);
+					if (squirtleState == SquirtleState.WALKING) {
+						setSpeedX(2);
+					} else {
+						setSpeedX(8);
+					}
 
 				}
 
 				if (getBoundsRight().intersects(t.getBounds())) {
-					setSpeedX(-2);
+					if (squirtleState == SquirtleState.WALKING) {
+						setSpeedX(-2);
+					} else {
+						setSpeedX(-8);
+					}
+
 				}
 
 			}
@@ -95,7 +140,15 @@ public class Squirtle extends Entity {
 			}
 			frameDelay = 0;
 		}
-		
+
+	}
+
+	public SquirtleState getSquirtleState() {
+		return squirtleState;
+	}
+
+	public void setSquirtleState(SquirtleState squirtleState) {
+		this.squirtleState = squirtleState;
 	}
 
 }

@@ -29,7 +29,8 @@ public class Main extends Canvas implements Runnable {
 	public static final int SCALE = 3;
 	public static final int DEATHTIME = 180;
 	public static final String TITLE = "Pokemon bros";
-	private BufferedImage image;
+	
+	private static BufferedImage[] levels = new BufferedImage[2]; 
 
 	private Thread thread;
 	private static Handler handler;
@@ -37,6 +38,7 @@ public class Main extends Canvas implements Runnable {
 	private static Launcher launcher;
 	
 	private static int playerX, playerY;
+	private static int level = 0;
 
 	private static int coins = 0;
 	private static int lives = 5;
@@ -52,12 +54,14 @@ public class Main extends Canvas implements Runnable {
 	private static SpriteSheet mushroomsheet;
 	private static SpriteSheet charmandersheet;
 	private static SpriteSheet squirtlesheet;
+	private static SpriteSheet squirtleshellsheet;
 	private static SpriteSheet powerupsheet;
 	private static SpriteSheet usedpowerupsheet;
 	private static SpriteSheet pipesheet;
 	private static SpriteSheet coinsheet;
 	private static SpriteSheet bosssheet;
 	private static SpriteSheet upstarsheet;
+	private static SpriteSheet flagsheet;
 
 	public static Sprite grass;
 	public static Sprite ground;
@@ -69,8 +73,10 @@ public class Main extends Canvas implements Runnable {
 	public static Sprite mushroom;
 	public static Sprite[] charmander = new Sprite[54];
 	public static Sprite[] squirtle = new Sprite[10];
+	public static Sprite squirtleshell;
 	public static Sprite pipe;
 	public static Sprite coin;
+	public static Sprite[] flag = new Sprite[3];
 	public static Sprite[] boss = new Sprite[4];
 	public static Sprite upstar;
 
@@ -105,10 +111,12 @@ public class Main extends Canvas implements Runnable {
 		mushroomsheet = new SpriteSheet("/kanto.png");
 		charmandersheet = new SpriteSheet("/charmander.png");
 		squirtlesheet = new SpriteSheet("/squirtle.png");
+		squirtleshellsheet = new SpriteSheet("/shell.png");
 		powerupsheet = new SpriteSheet("/powerUp.jpg");
 		usedpowerupsheet = new SpriteSheet("/usedPowerUp.jpg");
 		pipesheet = new SpriteSheet("/pipe.png");
 		coinsheet = new SpriteSheet("/pokeball.png");
+		flagsheet = new SpriteSheet("/flag.png");
 		bosssheet = new SpriteSheet("/charizard.png");
 		upstarsheet = new SpriteSheet("/1upstar.png");
 		
@@ -123,6 +131,7 @@ public class Main extends Canvas implements Runnable {
 		grass = new Sprite(sheet, 2, 1);
 		ground = new Sprite(groundsheet, 1, 1);
 		mushroom = new Sprite(mushroomsheet, 1, 1);
+		squirtleshell = new Sprite(squirtleshellsheet,1,1);
 		powerUp = new Sprite(powerupsheet, 1, 1);
 		usedPowerUp = new Sprite(usedpowerupsheet, 1, 1);
 		pipe = new Sprite(pipesheet, 1, 1);
@@ -150,6 +159,11 @@ public class Main extends Canvas implements Runnable {
 				squirtle[picture_counter] = new Sprite(squirtlesheet, j, 1);
 				picture_counter++;
 			}
+		picture_counter = 0;
+			for (int j = 1; j <= 3; j++) {
+				flag[picture_counter] = new Sprite(flagsheet, 1, j);
+				picture_counter++;
+			}
 
 		
 		picture_counter = 0;
@@ -162,7 +176,9 @@ public class Main extends Canvas implements Runnable {
 		}
 
 		try {
-			image = ImageIO.read(getClass().getResource("/level.png"));
+			for(int i = 1; i<=levels.length;i++) {
+			levels[i-1] = ImageIO.read(getClass().getResource("/level" + i +".png"));
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -260,7 +276,7 @@ public class Main extends Canvas implements Runnable {
 				deathScreen = false;
 				deathScreenTimer = 0;
 				handler.clearLevel();
-				handler.createLevel(image);
+				handler.createLevel(levels[level]);
 
 			}
 		}
@@ -320,6 +336,14 @@ public class Main extends Canvas implements Runnable {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		object.start();
+	}
+	
+	public static void switchLevel() {
+		level++;
+		
+		handler.clearLevel();
+		handler.createLevel(levels[level]);
+		
 	}
 
 	public static int getCoins() {
