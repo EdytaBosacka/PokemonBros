@@ -26,10 +26,10 @@ public class Squirtle extends Entity {
 
 		switch (direction) {
 		case 0:
-			setSpeedX(-2);
+			setSpeedX(-2.0);
 			break;
 		case 1:
-			setSpeedX(2);
+			setSpeedX(2.0);
 			break;
 
 		}
@@ -80,10 +80,10 @@ public class Squirtle extends Entity {
 
 					switch (direction) {
 					case 0:
-						setSpeedX(-2);
+						setSpeedX(-2.0);
 						break;
 					case 1:
-						setSpeedX(2);
+						setSpeedX(2.0);
 						break;
 					}
 				}
@@ -109,18 +109,18 @@ public class Squirtle extends Entity {
 
 				if (getBoundsLeft().intersects(t.getBounds())) {
 					if (squirtleState == SquirtleState.WALKING) {
-						setSpeedX(2);
+						setSpeedX(2.0);
 					} else {
-						setSpeedX(8);
+						setSpeedX(8.0);
 					}
 
 				}
 
 				if (getBoundsRight().intersects(t.getBounds())) {
 					if (squirtleState == SquirtleState.WALKING) {
-						setSpeedX(-2);
+						setSpeedX(-2.0);
 					} else {
-						setSpeedX(-8);
+						setSpeedX(-8.0);
 					}
 
 				}

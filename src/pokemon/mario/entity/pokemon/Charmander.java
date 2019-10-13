@@ -21,10 +21,10 @@ public class Charmander extends Entity {
 
 		switch (direction) {
 		case 0:
-			setSpeedX(-2);
+			setSpeedX(-2.0);
 			break;
 		case 1:
-			setSpeedX(2);
+			setSpeedX(2.0);
 			break;
 
 		}
@@ -71,12 +71,12 @@ public class Charmander extends Entity {
 				}
 
 				if (getBoundsLeft().intersects(t.getBounds())) {
-					setSpeedX(2);
+					setSpeedX(2.0);
 
 				}
 
 				if (getBoundsRight().intersects(t.getBounds())) {
-					setSpeedX(-2);
+					setSpeedX(-2.0);
 				}
 
 			}

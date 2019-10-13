@@ -93,7 +93,8 @@ public class Handler {
 //				if(red==255&&green==0&&blue==0) addEntity(new Mushroom(x*64,y*64,64,64, ID.mushroom,this));
 				else if(red==0&&green==128&&blue==0) addEntity(new Charmander(x*64,y*64,64,64, ID.charmander,this));
 				else if(red==0&&green==255&&blue==0) addEntity(new Squirtle(x*64,y*64,64,64, ID.squirtle,this));
-				else if((red>251 && red<256)&& green==0&&blue==0) addTile(new Pipe(x*64,y*64,64,64,true,ID.pipe,this,255-red));
+				else if((red>251 && red<256)&& green==0&&blue==0) addTile(new Pipe(x*64,y*64,64,64,true,ID.pipe,this,255-red,false));
+				else if((red>251 && red<256)&& green==176&&blue==50) addTile(new Pipe(x*64,y*64,64,64,true,ID.pipe,this,255-red,true));
 				else if(red==247&&green==53&&blue==199) addTile(new Coin(x*64+12,y*64+12,40,40,true, ID.coin,this));
 				else if(red==128&&green==0&&blue==64) addTile(new Flag(x*64,y*64,64,320,true,ID.flag,this));
 			}

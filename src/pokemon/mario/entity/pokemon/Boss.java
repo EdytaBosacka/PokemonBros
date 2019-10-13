@@ -129,7 +129,7 @@ public class Boss extends Entity {
 				if (getBoundsLeft().intersects(t.getBounds())) {
 					setSpeedX(0);
 					if (bossState == BossState.RUNNING) {
-						setSpeedX(4);
+						setSpeedX(4.0);
 					}
 					x = t.getX() + t.width;
 				}
@@ -137,7 +137,7 @@ public class Boss extends Entity {
 				if (getBoundsRight().intersects(t.getBounds())) {
 					setSpeedX(0);
 					if (bossState == BossState.RUNNING) {
-						setSpeedX(-4);
+						setSpeedX(-4.0);
 					}
 					x = t.getX() - width;
 				}
@@ -154,20 +154,20 @@ public class Boss extends Entity {
 							setSpeedX(0);
 						}
 						else if (e.getX() < getX()) {
-							setSpeedX(-4);
+							setSpeedX(-4.0);
 						}
 						else if (e.getX() > getX()) {
-							setSpeedX(4);
+							setSpeedX(4.0);
 						}
 					}else {
 						setSpeedX(0);
 					}
 				}else if(bossState == BossState.SPINNING) {
 					if (e.getX() < getX()) {
-						setSpeedX(-4);
+						setSpeedX(-4.0);
 					}
 					else if (e.getX() > getX()) {
-						setSpeedX(4);
+						setSpeedX(4.0);
 					}
 					
 				}

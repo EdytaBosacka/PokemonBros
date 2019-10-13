@@ -73,13 +73,12 @@ public class Player extends Entity {
 			Tile t = handler.tile.get(i);
 			if (!t.solid || goingDownPipe)
 				continue;
-			if(t.getID()==ID.flag) {
+			if (t.getID() == ID.flag) {
 				if (getBounds().intersects(t.getBounds())) {
 					Main.switchLevel();
 				}
-				
-			}
-			else if (t.getID() == ID.wall || t.getID() == ID.powerUp || t.getID() == ID.pipe) {
+
+			} else if (t.getID() == ID.wall || t.getID() == ID.powerUp || t.getID() == ID.pipe) {
 				if (getBoundsTop().intersects(t.getBounds())) {
 					setSpeedY(0);
 					if (jumping && !goingDownPipe) {
@@ -135,7 +134,7 @@ public class Player extends Entity {
 					e.die();
 
 				}
-			} else if (e.getId() == ID.charmander || e.getId() == ID.boss) {
+			} else if (e.getId() == ID.charmander || e.getId() == ID.boss || e.getId() == ID.plant) {
 				if (getBoundsBottom().intersects(e.getBoundsTop())) {
 					if (e.getId() != ID.boss)
 						e.die();

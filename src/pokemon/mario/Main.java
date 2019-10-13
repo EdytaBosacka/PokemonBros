@@ -58,6 +58,7 @@ public class Main extends Canvas implements Runnable {
 	private static SpriteSheet powerupsheet;
 	private static SpriteSheet usedpowerupsheet;
 	private static SpriteSheet pipesheet;
+	private static SpriteSheet victreebelsheet;
 	private static SpriteSheet coinsheet;
 	private static SpriteSheet bosssheet;
 	private static SpriteSheet upstarsheet;
@@ -75,6 +76,7 @@ public class Main extends Canvas implements Runnable {
 	public static Sprite[] squirtle = new Sprite[10];
 	public static Sprite squirtleshell;
 	public static Sprite pipe;
+	public static Sprite victreebel[] = new Sprite[8];
 	public static Sprite coin;
 	public static Sprite[] flag = new Sprite[3];
 	public static Sprite[] boss = new Sprite[4];
@@ -115,6 +117,7 @@ public class Main extends Canvas implements Runnable {
 		powerupsheet = new SpriteSheet("/powerUp.jpg");
 		usedpowerupsheet = new SpriteSheet("/usedPowerUp.jpg");
 		pipesheet = new SpriteSheet("/pipe.png");
+		victreebelsheet = new SpriteSheet("/Victreebel.png");
 		coinsheet = new SpriteSheet("/pokeball.png");
 		flagsheet = new SpriteSheet("/flag.png");
 		bosssheet = new SpriteSheet("/charizard.png");
@@ -157,6 +160,12 @@ public class Main extends Canvas implements Runnable {
 		picture_counter = 0;
 			for (int j = 1; j <= 10; j++) {
 				squirtle[picture_counter] = new Sprite(squirtlesheet, j, 1);
+				picture_counter++;
+			}
+			
+		picture_counter = 0;
+			for (int j = 1; j <= 8; j++) {
+				victreebel[picture_counter] = new Sprite(victreebelsheet, j, 1);
 				picture_counter++;
 			}
 		picture_counter = 0;

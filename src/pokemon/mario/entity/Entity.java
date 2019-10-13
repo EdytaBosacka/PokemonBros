@@ -92,4 +92,12 @@ public abstract class Entity {
 		return new Rectangle(getX()+width-5, getY()+10, 5, height-20);
 	}
 
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
 }

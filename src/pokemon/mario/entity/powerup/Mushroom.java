@@ -19,10 +19,10 @@ public abstract class Mushroom extends Entity {
 		
 		switch(direction) {
 		case 0:
-			setSpeedX(-5);
+			setSpeedX(-5.0);
 			break;
 		case 1:
-			setSpeedX(5);
+			setSpeedX(5.0);
 			break;
 		
 		}
@@ -47,18 +47,18 @@ public abstract class Mushroom extends Entity {
 						falling = false;
 				} else {
 					if (!falling) {
-						gravity = 0.8;
+						gravity = 0.80;
 						falling = true;
 					}
 				}
 
 				if (getBoundsLeft().intersects(t.getBounds())) {
-					setSpeedX(5);
+					setSpeedX(5.0);
 
 				}
 
 				if (getBoundsRight().intersects(t.getBounds())) {
-					setSpeedX(-5);
+					setSpeedX(-5.0);
 				}
 
 			}
