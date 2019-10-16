@@ -62,6 +62,7 @@ public class Main extends Canvas implements Runnable {
 	private static SpriteSheet coinsheet;
 	private static SpriteSheet bosssheet;
 	private static SpriteSheet upstarsheet;
+	private static SpriteSheet bluestarsheet;
 	private static SpriteSheet flagsheet;
 
 	public static Sprite grass;
@@ -81,6 +82,7 @@ public class Main extends Canvas implements Runnable {
 	public static Sprite[] flag = new Sprite[3];
 	public static Sprite[] boss = new Sprite[4];
 	public static Sprite upstar;
+	public static Sprite bluestar;
 
 	private boolean running = false;
 	public static BufferedImage backgroundmenu;
@@ -122,6 +124,7 @@ public class Main extends Canvas implements Runnable {
 		flagsheet = new SpriteSheet("/flag.png");
 		bosssheet = new SpriteSheet("/charizard.png");
 		upstarsheet = new SpriteSheet("/1upstar.png");
+		bluestarsheet = new SpriteSheet("/powerupstar.png");
 		
 		try {
 			backgroundmenu = ImageIO.read(getClass().getResource("/menu.png"));
@@ -140,6 +143,7 @@ public class Main extends Canvas implements Runnable {
 		pipe = new Sprite(pipesheet, 1, 1);
 		coin = new Sprite(coinsheet, 1, 1);
 		upstar = new Sprite(upstarsheet,1,1);
+		bluestar = new Sprite(bluestarsheet,1,1);
 
 		int picture_counter = 0;
 		for (int i = 1; i <= 4; i++) {

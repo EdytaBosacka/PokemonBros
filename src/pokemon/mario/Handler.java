@@ -88,6 +88,7 @@ public class Handler {
 				else if(red==128&&green==64&&blue==0) addTile(new Ground(x*64,y*64,64,64,true,ID.wall,this));
 				else if(red==255&&green==255&&blue==0) addTile(new PowerUpBlock(x*64,y*64,64,64,true, ID.powerUp,this, Main.mushroom,PowerUpBlock.POWERUP));
 				else if(red==0&&green==162&&blue==232) addTile(new PowerUpBlock(x*64,y*64,64,64,true, ID.powerUp,this, Main.upstar,PowerUpBlock.STAR));
+				else if(red==174&&green==174&&blue==174) addTile(new PowerUpBlock(x*64,y*64,64,64,true, ID.powerUp,this, Main.bluestar,PowerUpBlock.BLUESTAR));
 				else if(red==0&&green==0&&blue==255) addEntity(new Player(x*64,y*64,64,64, ID.player,this));
 				else if(red==181&&green==230&&blue==29) addEntity(new Boss(x*64,y*64,128,128, ID.boss,this,3));
 //				if(red==255&&green==0&&blue==0) addEntity(new Mushroom(x*64,y*64,64,64, ID.mushroom,this));
