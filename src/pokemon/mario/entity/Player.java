@@ -8,6 +8,7 @@ import pokemon.mario.ID;
 import pokemon.mario.Main;
 import pokemon.mario.entity.pokemon.Boss;
 import pokemon.mario.entity.pokemon.Squirtle;
+import pokemon.mario.entity.powerup.Bluestar;
 import pokemon.mario.entity.powerup.PowerUp;
 import pokemon.mario.entity.powerup.Star;
 import pokemon.mario.states.BossState;
@@ -20,10 +21,14 @@ public class Player extends Entity {
 	private PlayerState state;
 
 	private int pixelsTravelled = 0;
+	private int invincibleTime = 0;
 
 	private int frame = 0;
 	private int frameDelay = 0;
+	
 	private boolean animated = false;
+	private boolean invincible = false;
+	private boolean bluestaractiv =false;
 
 	private Random random = new Random();
 
@@ -60,8 +65,20 @@ public class Player extends Entity {
 	public void update() {
 		x += speedX;
 		y += speedY;
+		
+		
 		if (x < 0)
 			x = 0;
+		
+		if(invincible) {
+			invincibleTime--;
+			if(invincibleTime<0) {
+				invincible = false;
+				invincibleTime=0;
+				bluestaractiv = false;
+			}
+			
+		}
 
 		if (speedX != 0) {
 			animated = true;
@@ -130,97 +147,135 @@ public class Player extends Entity {
 							state = PlayerState.BIG;
 					} else if (e instanceof Star) {
 						Main.setLives(Main.getLives() + 1);
+					}else if(e instanceof Bluestar) {
+						invincible = true;
+						invincibleTime = 600;
+						bluestaractiv = true;
 					}
 					e.die();
 
 				}
 			} else if (e.getId() == ID.charmander || e.getId() == ID.boss || e.getId() == ID.plant) {
-				if (getBoundsBottom().intersects(e.getBoundsTop())) {
-					if (e.getId() != ID.boss)
+				if(getBounds().intersects(e.getBounds())) {
+					if(invincible) {
+						if(bluestaractiv) {
 						e.die();
-					else if (((Boss) e).isAttackable()) {
-						((Boss) e).setHealth(((Boss) e).getHealth() - 1);
-						e.falling = true;
-						e.gravity = 3.0;
-						((Boss) e).setBossState(BossState.RECOVERING);
-						((Boss) e).setAttackable(false);
-						((Boss) e).setPhaseTime(0);
+						}
+					}else {
+						if (getBoundsBottom().intersects(e.getBoundsTop())) {
+							if (e.getId() != ID.boss)
+								e.die();
+							else if (((Boss) e).isAttackable()) {
+								((Boss) e).setHealth(((Boss) e).getHealth() - 1);
+								e.falling = true;
+								e.gravity = 3.0;
+								((Boss) e).setBossState(BossState.RECOVERING);
+								((Boss) e).setAttackable(false);
+								((Boss) e).setPhaseTime(0);
 
-						jumping = true;
-						falling = false;
-						gravity = 3.5;
+								jumping = true;
+								falling = false;
+								gravity = 3.5;
 
-					}
-				} else if (getBounds().intersects(e.getBounds())) {
-					if (state == PlayerState.BIG) {
-						state = PlayerState.SMALL;
-						height /= 1.3;
-					} else if (state == PlayerState.SMALL) {
-						die();
-					}
-
-				}
-
-			} else if (e.getId() == ID.squirtle) {
-				Squirtle squirtle = (Squirtle) e;
-				if (squirtle.getSquirtleState() == SquirtleState.WALKING) {
-					if (getBoundsBottom().intersects(squirtle.getBoundsTop())) {
-
-						squirtle.setSquirtleState(SquirtleState.SHELL);
-						squirtle.setSpeedX(0);
-
-						jumping = true;
-						falling = false;
-						gravity = 3.5;
-
-					} else if (getBounds().intersects(squirtle.getBounds())) {
-						die();
-					}
-
-				} else if (squirtle.getSquirtleState() == SquirtleState.SHELL) {
-					if (getBoundsBottom().intersects(squirtle.getBoundsTop())) {
-
-						squirtle.setSquirtleState(SquirtleState.SPINNING);
-
-						int direction = random.nextInt(2);
-
-						switch (direction) {
-						case 0:
-							squirtle.setSpeedX(-10);
-							break;
-						case 1:
-							squirtle.setSpeedX(10);
-							break;
+							}
+						} else if (getBounds().intersects(e.getBounds())) {
+							if (state == PlayerState.BIG) {
+								state = PlayerState.SMALL;
+								invincible = true;
+								invincibleTime = 300;
+								height /= 1.3;
+							} else if (state == PlayerState.SMALL) {
+								die();
+							}
 
 						}
 
-						jumping = true;
-						falling = false;
-						gravity = 3.5;
 					}
-					if (getBoundsLeft().intersects(squirtle.getBoundsRight())) {
-						squirtle.setSpeedX(-10);
-						squirtle.setSquirtleState(SquirtleState.SPINNING);
-					}
-					if (getBoundsRight().intersects(squirtle.getBoundsLeft())) {
-						squirtle.setSpeedX(10);
-						squirtle.setSquirtleState(SquirtleState.SPINNING);
-					}
-				} else if (squirtle.getSquirtleState() == SquirtleState.SPINNING) {
-
-					if (getBoundsBottom().intersects(squirtle.getBoundsTop())) {
-
-						squirtle.setSquirtleState(SquirtleState.SHELL);
-
-						jumping = true;
-						falling = false;
-						gravity = 3.5;
-
-					} else if (getBounds().intersects(squirtle.getBounds())) {
-						die();
-					}
-
 				}
+				
+			} else if (e.getId() == ID.squirtle) {
+				if(getBounds().intersects(e.getBounds())) {
+					if(invincible) {
+						if(bluestaractiv) {
+						e.die();
+						}
+					}else {Squirtle squirtle = (Squirtle) e;
+					if (squirtle.getSquirtleState() == SquirtleState.WALKING) {
+						if (getBoundsBottom().intersects(squirtle.getBoundsTop())) {
+
+							squirtle.setSquirtleState(SquirtleState.SHELL);
+							squirtle.setSpeedX(0);
+
+							jumping = true;
+							falling = false;
+							gravity = 3.5;
+
+						} else if (getBounds().intersects(squirtle.getBounds())) {
+							if (state == PlayerState.BIG) {
+								state = PlayerState.SMALL;
+								invincible = true;
+								invincibleTime = 300;
+								height /= 1.3;
+							} else if (state == PlayerState.SMALL) {
+								die();
+							}
+						}
+
+					} else if (squirtle.getSquirtleState() == SquirtleState.SHELL) {
+						if (getBoundsBottom().intersects(squirtle.getBoundsTop())) {
+
+							squirtle.setSquirtleState(SquirtleState.SPINNING);
+
+							int direction = random.nextInt(2);
+
+							switch (direction) {
+							case 0:
+								squirtle.setSpeedX(-10);
+								break;
+							case 1:
+								squirtle.setSpeedX(10);
+								break;
+
+							}
+
+							jumping = true;
+							falling = false;
+							gravity = 3.5;
+						}
+						if (getBoundsLeft().intersects(squirtle.getBoundsRight())) {
+							squirtle.setSpeedX(-10);
+							squirtle.setSquirtleState(SquirtleState.SPINNING);
+						}
+						if (getBoundsRight().intersects(squirtle.getBoundsLeft())) {
+							squirtle.setSpeedX(10);
+							squirtle.setSquirtleState(SquirtleState.SPINNING);
+						}
+					} else if (squirtle.getSquirtleState() == SquirtleState.SPINNING) {
+
+						if (getBoundsBottom().intersects(squirtle.getBoundsTop())) {
+
+							squirtle.setSquirtleState(SquirtleState.SHELL);
+
+							jumping = true;
+							falling = false;
+							gravity = 3.5;
+
+						} else if (getBounds().intersects(squirtle.getBounds())) {
+							if (state == PlayerState.BIG) {
+								state = PlayerState.SMALL;
+								invincible = true;
+								invincibleTime = 300;
+								height /= 1.3;
+							} else if (state == PlayerState.SMALL) {
+								die();
+							}
+						}
+
+					}
+						
+					}
+					}
+				
 			}
 
 		}
