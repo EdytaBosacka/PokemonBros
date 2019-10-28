@@ -76,6 +76,14 @@ public abstract class Tile {
 	public Rectangle getBounds() {
 		return new Rectangle(getX(),getY(),width,height);
 	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
 	
 	
 

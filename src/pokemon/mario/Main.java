@@ -64,6 +64,7 @@ public class Main extends Canvas implements Runnable {
 	private static SpriteSheet upstarsheet;
 	private static SpriteSheet bluestarsheet;
 	private static SpriteSheet flagsheet;
+	private static SpriteSheet particlesheet;
 
 	public static Sprite grass;
 	public static Sprite ground;
@@ -83,6 +84,7 @@ public class Main extends Canvas implements Runnable {
 	public static Sprite[] boss = new Sprite[4];
 	public static Sprite upstar;
 	public static Sprite bluestar;
+	public static Sprite[] particle = new Sprite[40];
 
 	private boolean running = false;
 	public static BufferedImage backgroundmenu;
@@ -125,6 +127,7 @@ public class Main extends Canvas implements Runnable {
 		bosssheet = new SpriteSheet("/charizard.png");
 		upstarsheet = new SpriteSheet("/1upstar.png");
 		bluestarsheet = new SpriteSheet("/powerupstar.png");
+		particlesheet = new SpriteSheet("/particle1.png");
 		
 		try {
 			backgroundmenu = ImageIO.read(getClass().getResource("/menu.png"));
@@ -144,6 +147,7 @@ public class Main extends Canvas implements Runnable {
 		coin = new Sprite(coinsheet, 1, 1);
 		upstar = new Sprite(upstarsheet,1,1);
 		bluestar = new Sprite(bluestarsheet,1,1);
+		
 
 		int picture_counter = 0;
 		for (int i = 1; i <= 4; i++) {
@@ -157,6 +161,14 @@ public class Main extends Canvas implements Runnable {
 		for (int i = 1; i <= 6; i++) {
 			for (int j = 1; j <= 9; j++) {
 				charmander[picture_counter] = new Sprite(charmandersheet, j, i);
+				picture_counter++;
+			}
+
+		}
+		picture_counter = 0;
+		for (int i = 1; i <= 5; i++) {
+			for (int j = 1; j <= 8; j++) {
+				particle[picture_counter] = new Sprite(particlesheet, j, i);
 				picture_counter++;
 			}
 

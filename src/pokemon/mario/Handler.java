@@ -47,7 +47,8 @@ public class Handler {
 			Entity en = entity.get(i);
 			en.update();
 		}
-		for(Tile ti: tile) {
+		for(int i=0;i<tile.size();i++) {
+			Tile ti = tile.get(i);
 			if(Main.getVisibleArea()!=null&&ti.getBounds().intersects(Main.getVisibleArea())) {
 			ti.update();
 			}

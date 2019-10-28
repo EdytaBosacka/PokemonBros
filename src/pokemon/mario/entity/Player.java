@@ -15,6 +15,7 @@ import pokemon.mario.states.BossState;
 import pokemon.mario.states.PlayerState;
 import pokemon.mario.states.SquirtleState;
 import pokemon.mario.tile.Tile;
+import pokemon.mario.tile.Trail;
 
 public class Player extends Entity {
 
@@ -22,6 +23,7 @@ public class Player extends Entity {
 
 	private int pixelsTravelled = 0;
 	private int invincibleTime = 0;
+	private int particleDelay = 0;
 
 	private int frame = 0;
 	private int frameDelay = 0;
@@ -71,6 +73,20 @@ public class Player extends Entity {
 			x = 0;
 		
 		if(invincible) {
+			if(bluestaractiv) {
+				if(facing ==0) {
+					handler.addTile(new Trail(getX(),getY(),getWidth(),getHeight(),false, ID.trail,handler, Main.player[frame % 5 + 15].getBufferedImage()));
+				}else if(facing ==1) {
+					handler.addTile(new Trail(getX(),getY(),getWidth(),getHeight(),false, ID.trail,handler, Main.player[frame % 5 + 5].getBufferedImage()));
+				}
+				particleDelay++;
+				if(particleDelay>=3) {
+					handler.addEntity(new Particle(getX()+random.nextInt(getWidth()), getY()+random.nextInt(getHeight()),10,10,ID.particle,handler));
+					
+					particleDelay =0;
+				}
+				
+			}
 			invincibleTime--;
 			if(invincibleTime<0) {
 				invincible = false;
