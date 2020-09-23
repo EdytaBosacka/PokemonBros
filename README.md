@@ -1,7 +1,7 @@
 # PokemonBros
 Gra PokemonBros w której pokemony znalazły się w świecie Super Mario. 
 
-![sterowanie](https://user-images.githubusercontent.com/33400631/93989727-924c2780-fd8a-11ea-9f4d-87c419a2d16a.png)
+![aroows](https://user-images.githubusercontent.com/33400631/93991464-a3963380-fd8c-11ea-92e8-11ad1c663158.jpg)
 
 Sterowanie:
 
