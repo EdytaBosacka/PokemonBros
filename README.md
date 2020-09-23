@@ -20,6 +20,7 @@ Menu początkowe:
 
 ![pokemon_bros_1](https://user-images.githubusercontent.com/33400631/93989283-01754c00-fd8a-11ea-9016-f11d43445ba9.png)
 
+Przykładowy screen z gry:
 
-![pokemon_bros_2](https://user-images.githubusercontent.com/33400631/93992280-a5acc200-fd8d-11ea-9afa-6baca1457283.png)
+![pokemon_bros_2](https://user-images.githubusercontent.com/33400631/93992479-e4427c80-fd8d-11ea-998b-3959adbf25eb.png)
 
