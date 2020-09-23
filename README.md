@@ -14,7 +14,7 @@ Sterowanie:
 
 ![upaarrow](https://user-images.githubusercontent.com/33400631/93990637-a7758600-fd8b-11ea-990e-a5bc3eaf767c.png) - zwiększenie siły skoku
 
-spacja - skok
+![space](https://user-images.githubusercontent.com/33400631/93991236-5914b700-fd8c-11ea-911a-bfb4e23b08e3.jpg) - skok
 
 Menu początkowe:
 
