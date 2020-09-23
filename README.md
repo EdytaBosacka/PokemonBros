@@ -5,7 +5,7 @@ Gra PokemonBros w której pokemony znalazły się w świecie Super Mario.
 
 Sterowanie:
 
-→ - pójście w prawo    ![rightarrow](https://user-images.githubusercontent.com/33400631/93990205-23bb9980-fd8b-11ea-9b48-6a7a774d6e89.png)
+ ![rightarrow](https://user-images.githubusercontent.com/33400631/93990205-23bb9980-fd8b-11ea-9b48-6a7a774d6e89.png) - pójście w prawo    
     
 
 ← - pójście w lewo          
