@@ -10,7 +10,7 @@ Sterowanie:
 
 ![leftarrow](https://user-images.githubusercontent.com/33400631/93990481-71380680-fd8b-11ea-97ff-9a5ad6404683.png) - pójście w lewo          
 
-↓ - wejście do rury
+![downkey](https://user-images.githubusercontent.com/33400631/93990795-db50ab80-fd8b-11ea-939a-823b870f6cb2.png) - wejście do rury
 
 ![upaarrow](https://user-images.githubusercontent.com/33400631/93990637-a7758600-fd8b-11ea-990e-a5bc3eaf767c.png) - zwiększenie siły skoku
 
