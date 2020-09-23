@@ -12,6 +12,8 @@ Sterowanie:
 
 ↓ - wejście do rury
 
+![upaarrow](https://user-images.githubusercontent.com/33400631/93990637-a7758600-fd8b-11ea-990e-a5bc3eaf767c.png) - zwiększenie siły skoku
+
 spacja - skok
 
 Menu początkowe:
