@@ -8,7 +8,7 @@ Sterowanie:
  ![rightarrow](https://user-images.githubusercontent.com/33400631/93990205-23bb9980-fd8b-11ea-9b48-6a7a774d6e89.png) - pójście w prawo    
     
 
-← - pójście w lewo          
+![leftarrow](https://user-images.githubusercontent.com/33400631/93990481-71380680-fd8b-11ea-97ff-9a5ad6404683.png) - pójście w lewo          
 
 ↓ - wejście do rury
 
