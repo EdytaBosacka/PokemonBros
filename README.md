@@ -14,10 +14,12 @@ Sterowanie:
 
 ![upaarrow](https://user-images.githubusercontent.com/33400631/93990637-a7758600-fd8b-11ea-990e-a5bc3eaf767c.png) - zwiększenie siły skoku
 
-![space](https://user-images.githubusercontent.com/33400631/93991236-5914b700-fd8c-11ea-911a-bfb4e23b08e3.jpg) - skok
+![spacja](https://user-images.githubusercontent.com/33400631/93992268-a2b1d180-fd8d-11ea-9fa4-f763a85e6b6a.png) - skok
 
 Menu początkowe:
 
 ![pokemon_bros_1](https://user-images.githubusercontent.com/33400631/93989283-01754c00-fd8a-11ea-9016-f11d43445ba9.png)
 
+
+![pokemon_bros_2](https://user-images.githubusercontent.com/33400631/93992280-a5acc200-fd8d-11ea-9afa-6baca1457283.png)
 
