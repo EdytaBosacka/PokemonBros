@@ -1,5 +1,6 @@
 # PokemonBros
 ![PokemonDemo2](https://user-images.githubusercontent.com/33400631/137399011-07062d59-f7e9-419c-8f9c-d9dbfa1cf97a.gif)
+![PokemonDemo7](https://user-images.githubusercontent.com/33400631/137408987-5001859a-ca8c-404a-a051-d29697f8511d.gif)
 
 PokemonBros is a game in which pokemons find themselves in the world of Super Mario.
 
