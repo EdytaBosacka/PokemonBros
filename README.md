@@ -2,9 +2,7 @@
 ![PokemonDemo7](https://user-images.githubusercontent.com/33400631/137408987-5001859a-ca8c-404a-a051-d29697f8511d.gif)
 
 PokemonBros is a game in which pokemons find themselves in the world of Super Mario.
-<p align="center">
-   <img src="(https://user-images.githubusercontent.com/33400631/137408987-5001859a-ca8c-404a-a051-d29697f8511d.gif"/>
-</p>
+
 Controls:
 
 ![rightarrow](https://user-images.githubusercontent.com/33400631/93990205-23bb9980-fd8b-11ea-9b48-6a7a774d6e89.png) - go right   
